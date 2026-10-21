@@ -15,7 +15,7 @@ Kit de marca para médicos em início de carreira, já em conformidade com a Res
 
 ## Landing page
 
-Abra `site/index.html` no navegador. A página tem cabeçalho, apresentação do produto, benefícios, lista de espera, perguntas frequentes e rodapé.
+No ar em **https://m2costa.github.io/carimbo/**, publicada pelo GitHub Pages a cada push em `site/` (workflow em `.github/workflows/pages.yml`). Localmente, abra `site/index.html` no navegador. A página tem cabeçalho, apresentação do produto, benefícios, lista de espera, perguntas frequentes e rodapé.
 
 ### Lista de espera
 
