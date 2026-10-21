@@ -1,0 +1,15 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-20T12:30:00Z"},
+  "lists": "css",
+  "title": "Carimbo · Apresentação da marca",
+  "order": ["conceito", "logo", "identidade"],
+  "sections": {
+    "s1": {"description": "A marca Carimbo: nome, conceito e identidade visual", "start": "conceito"}
+  },
+  "faces": {
+    "source-serif-4": {"family": "Source Serif 4", "href": "https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&display=swap"},
+    "source-sans-3": {"family": "Source Sans 3", "href": "https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"}
+  },
+  "designSystems": []
+}

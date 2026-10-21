@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Carimbo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+/* Layout: dark-green hero band with the kit mockup, light sections in a 1160px column, mint signup band, dark footer. */
+:root {
+  --bg: #EEF3F1;
+  --surface: #FBFCFB;
+  --fg: #12302F;
+  --muted: #4A5F5D;
+  --line: #D3E2DD;
+  --teal: #1F6F66;
+  --accent: #E2582B;
+  --accent-text: #B9441C;
+  --mint: #DCEBE6;
+  --band: #12302F;
+  --on-band: #F7FAF9;
+  --on-band-muted: #BFD8D2;
+  --band-accent: #F2875F;
+  --sym-base: #12302F;
+  --field: #FFFFFF;
+  --focus: #1F6F66;
+  --ok: #1F6F66;
+  --err: #B3261E;
+  /* fixed palette of the sample doctor's brand inside the mockup */
+  --argila-bg: #F4ECE6;
+  --argila-ink: #5B2E2A;
+  --argila-accent: #9A4F3C;
+  --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1F1E; --surface: #142B29; --fg: #E8F0ED; --muted: #A9BFBA; --line: #2A4643;
+    --teal: #7CCBBE; --accent: #F2875F; --accent-text: #F2875F; --mint: #17302E;
+    --band: #091817; --on-band: #F2F7F5; --on-band-muted: #A9C7C0; --band-accent: #F2875F;
+    --sym-base: #DCEBE6; --field: #0F2422; --focus: #7CCBBE; --ok: #7CCBBE; --err: #FF8A80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1F1E; --surface: #142B29; --fg: #E8F0ED; --muted: #A9BFBA; --line: #2A4643;
+  --teal: #7CCBBE; --accent: #F2875F; --accent-text: #F2875F; --mint: #17302E;
+  --band: #091817; --on-band: #F2F7F5; --on-band-muted: #A9C7C0; --band-accent: #F2875F;
+  --sym-base: #DCEBE6; --field: #0F2422; --focus: #7CCBBE; --ok: #7CCBBE; --err: #FF8A80;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: var(--teal); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-text); }
+.section { padding-block: 88px; }
+.section-head { display: grid; gap: 14px; max-width: 680px; margin-bottom: 40px; }
+.section-head h2 { font-size: clamp(32px, 4vw, 46px); line-height: 1.1; letter-spacing: -.015em; }
+.section-head p { color: var(--muted); font-size: 19px; }
+
+/* symbol */
+.sym .b { fill: var(--sym-base); }
+.sym .a { fill: var(--accent); }
+.on-band .sym .b { fill: #DCEBE6; }
+.on-band .sym .a { fill: #E2582B; }
+
+/* header */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
+.brand .word { font-family: var(--font-display); font-weight: 700; font-size: 30px; letter-spacing: -.035em; line-height: 1; margin-top: -4px; }
+.nav { display: flex; align-items: center; gap: 24px; }
+.nav a.link { color: var(--fg); text-decoration: none; font-weight: 600; font-size: 16px; }
+.nav a.link:hover { color: var(--teal); }
+@media (max-width: 760px) { .nav a.link { display: none; } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 999px; font: 700 19px/1 var(--font-body); text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: transform .15s ease, background-color .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: #E2582B; color: #12302F; }
+.btn-primary:hover { background: #EA6A40; }
+.btn-ghost { background: transparent; color: var(--on-band); border-color: rgba(247,250,249,.45); }
+.btn-ghost:hover { border-color: var(--on-band); }
+.btn-small { min-height: 44px; font-size: 16px; padding: 0 18px; }
+.site-header .btn-small { background: var(--band); color: var(--on-band); }
+
+/* hero */
+.hero { background: var(--band); color: var(--on-band); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 56px; align-items: center; padding-block: 72px 96px; }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 48px 64px; } }
+.hero .eyebrow { color: var(--band-accent); }
+.hero-copy { display: grid; gap: 24px; min-width: 0; }
+.hero h1 { font-size: clamp(46px, 6.4vw, 84px); line-height: 1.0; letter-spacing: -.025em; }
+.hero h1 em { font-style: normal; color: var(--band-accent); }
+.hero .lead { font-size: 20px; color: var(--on-band-muted); max-width: 34em; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-note { font-size: 15px; color: var(--on-band-muted); }
+
+.mock { position: relative; justify-self: center; width: min(100%, 400px); }
+.post { aspect-ratio: 4 / 5; max-width: 100%; background: var(--argila-bg); color: var(--argila-ink); border-radius: 18px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 30px 60px -30px rgba(0,0,0,.55); }
+.post-top { display: flex; justify-content: space-between; align-items: center; }
+.post-top .tag { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--argila-accent); }
+.mono { width: 40px; height: 40px; border-radius: 10px; background: var(--argila-ink); color: var(--argila-bg); display: grid; place-items: center; font: 700 18px var(--font-display); }
+.post h3 { font-size: 30px; line-height: 1.1; }
+.post ol { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; font-size: 16px; }
+.post ol b { color: var(--argila-accent); margin-right: 10px; }
+.post .disc { font-size: 12px; color: #7A4A42; margin-bottom: 8px; }
+.bloco { border: 2px solid var(--argila-ink); border-radius: 10px; padding: 3px; }
+.bloco > div { border: 1px solid var(--argila-ink); border-radius: 7px; padding: 7px 12px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 12px; }
+.bloco strong { font: 700 15px var(--font-display); }
+.bloco span { font-weight: 700; letter-spacing: .04em; }
+.selo { position: absolute; right: -14px; top: 38%; transform: rotate(-8deg); background: var(--argila-bg); color: #B9441C; border: 4px double #B9441C; border-radius: 12px; padding: 8px 14px; text-align: center; box-shadow: 0 12px 24px -12px rgba(0,0,0,.5); animation: stamp .7s cubic-bezier(.2,.9,.3,1.2) .35s both; }
+.selo small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.selo b { font: 700 20px var(--font-display); }
+@keyframes stamp { from { transform: rotate(-16deg) scale(1.35); } to { transform: rotate(-8deg) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .selo { animation: none; } }
+@media (max-width: 480px) { .selo { right: 4px; } }
+.swatches { display: flex; gap: 8px; align-items: center; margin-top: 16px; font-size: 14px; color: var(--on-band-muted); flex-wrap: wrap; }
+.swatches i { width: 22px; height: 22px; border-radius: 6px; display: inline-block; border: 1px solid rgba(255,255,255,.25); }
+
+/* data strip */
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 760px) { .stats { grid-template-columns: minmax(0, 1fr); } }
+.stat { display: grid; gap: 6px; padding-top: 20px; border-top: 2px solid var(--fg); }
+.stat strong { font: 700 clamp(40px, 5vw, 56px)/1 var(--font-display); color: var(--teal); font-variant-numeric: tabular-nums; }
+.stat p { color: var(--muted); }
+.source { margin-top: 20px; font-size: 14px; color: var(--muted); }
+
+/* how it works */
+.how { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+@media (max-width: 860px) { .how { grid-template-columns: minmax(0, 1fr); } }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding-block: 22px; border-top: 1px solid var(--line); }
+.steps li:last-child { border-bottom: 1px solid var(--line); }
+.steps li::before { content: counter(s); font: 700 34px/1 var(--font-display); color: var(--accent-text); }
+.steps h3 { font-size: 24px; margin-bottom: 4px; }
+.steps p { color: var(--muted); }
+.kit { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 32px; display: grid; gap: 18px; }
+.kit h3 { font-size: 26px; }
+.kit ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.kit li { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 12px; align-items: start; }
+.kit li svg { color: var(--teal); margin-top: 3px; }
+.kit .soon { font-size: 15px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+
+/* benefits */
+.benefits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 760px) { .benefits { grid-template-columns: minmax(0, 1fr); } }
+.benefit { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 28px; display: grid; gap: 10px; align-content: start; }
+.benefit svg { color: var(--teal); }
+.benefit h3 { font-size: 24px; }
+.benefit p { color: var(--muted); }
+
+.table-box { overflow-x: auto; margin-top: 40px; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 16px; }
+th, td { text-align: left; padding: 16px 20px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+thead th { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+thead th.us { color: var(--accent-text); }
+td.us { font-weight: 700; color: var(--fg); background: var(--mint); }
+tbody th { font-weight: 700; }
+
+/* signup */
+.signup { background: var(--mint); }
+.signup .wrap { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 56px; padding-block: 88px; align-items: start; }
+@media (max-width: 900px) { .signup .wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-block: 64px; } }
+.signup-copy { display: grid; gap: 18px; }
+.signup-copy h2 { font-size: clamp(34px, 4.4vw, 52px); line-height: 1.05; letter-spacing: -.02em; }
+.signup-copy p { color: var(--muted); font-size: 19px; }
+.perks { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; }
+.perks li { display: flex; gap: 10px; align-items: baseline; }
+.perks li::before { content: "+"; color: var(--accent-text); font-weight: 700; }
+
+.card { background: var(--surface); border-radius: 24px; padding: 32px; border: 1px solid var(--line); }
+@media (max-width: 480px) { .card { padding: 22px; } }
+form { display: grid; gap: 20px; }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 560px) { .row { grid-template-columns: minmax(0, 1fr); } }
+.field { display: grid; gap: 6px; min-width: 0; }
+label, legend { font-weight: 700; font-size: 15px; }
+.hint { font-weight: 400; color: var(--muted); }
+input[type=text], input[type=email], select { width: 100%; min-height: 48px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--field); color: var(--fg); font: 400 17px var(--font-body); }
+input:focus-visible, select:focus-visible { border-color: var(--focus); }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chip span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--field); font-size: 16px; font-weight: 600; cursor: pointer; }
+.chip input:checked + span { background: var(--band); border-color: var(--band); color: var(--on-band); }
+.chip input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.consent { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; align-items: start; font-weight: 400; font-size: 15px; color: var(--muted); }
+.consent input { width: 20px; height: 20px; margin-top: 2px; accent-color: #1F6F66; }
+.form-foot { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.form-foot .btn-primary { min-width: 220px; }
+.status { font-size: 15px; font-weight: 600; }
+.status.err { color: var(--err); }
+.done { display: grid; gap: 14px; justify-items: start; }
+.done h3 { font-size: 32px; }
+.done p { color: var(--muted); }
+.btn-outline { background: transparent; color: var(--fg); border-color: var(--line); font-size: 16px; min-height: 44px; }
+.owner { margin-top: 16px; font-size: 15px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 14px; }
+
+/* faq */
+.faq { display: grid; gap: 0; max-width: 820px; }
+.faq details { border-top: 1px solid var(--line); padding-block: 18px; }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font: 700 21px/1.3 var(--font-display); list-style-position: outside; }
+.faq details p { margin-top: 10px; color: var(--muted); max-width: 65ch; }
+
+/* footer */
+.site-footer { background: var(--band); color: var(--on-band); }
+.site-footer .wrap { padding-block: 56px 40px; display: grid; gap: 32px; }
+.foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px; }
+.foot-brand { display: grid; gap: 10px; max-width: 360px; }
+.foot-brand .brand { color: var(--on-band); }
+.foot-brand p { color: var(--on-band-muted); font-size: 16px; }
+.foot-cols { display: flex; flex-wrap: wrap; gap: 48px; }
+.foot-cols h3 { font: 700 13px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--band-accent); margin-bottom: 10px; }
+.foot-cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 16px; color: var(--on-band-muted); }
+.foot-cols a { color: var(--on-band); }
+.foot-bottom { border-top: 1px solid rgba(247,250,249,.15); padding-top: 20px; font-size: 14px; color: var(--on-band-muted); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#topo" aria-label="Carimbo, início">
+      <svg class="sym" width="34" height="34" viewBox="0 0 120 120" aria-hidden="true"><path class="b" d="M0 22A22 22 0 0 1 22 0H48A4 4 0 0 1 52 4V48A4 4 0 0 1 48 52H4A4 4 0 0 1 0 48Z"/><path class="a" d="M68 4A4 4 0 0 1 72 0H98A22 22 0 0 1 120 22V48A4 4 0 0 1 116 52H72A4 4 0 0 1 68 48Z"/><path class="b" d="M0 72A4 4 0 0 1 4 68H48A4 4 0 0 1 52 72V116A4 4 0 0 1 48 120H22A22 22 0 0 1 0 98Z"/><path class="b" d="M68 72A4 4 0 0 1 72 68H116A4 4 0 0 1 120 72V98A22 22 0 0 1 98 120H72A4 4 0 0 1 68 116Z"/></svg>
+      <span class="word">carimbo</span>
+    </a>
+    <nav class="nav" aria-label="Seções">
+      <a class="link" href="#como-funciona">Como funciona</a>
+      <a class="link" href="#beneficios">Benefícios</a>
+      <a class="link" href="#perguntas">Perguntas</a>
+      <a class="btn btn-small" href="#lista">Entrar na lista</a>
+    </nav>
+  </div>
+</header>
+
+<main id="topo">
+  <section class="hero on-band" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Kit de Marca Médica · compra única</p>
+        <h1 id="hero-title">Sua marca já nasce <em>com CRM.</em></h1>
+        <p class="lead">Identidade visual pronta para a sua especialidade: logo, paleta, tipografia e 10 templates editáveis que já trazem CRM e RQE no lugar certo. Feita para quem acabou de se formar e quer começar nas redes dentro das regras do CFM.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#lista">Entrar na lista de espera</a>
+          <a class="btn btn-ghost" href="#como-funciona">Ver o que vem no kit</a>
+        </div>
+        <p class="hero-note">Quem entra na lista recebe o kit primeiro, com preço de lançamento.</p>
+      </div>
+      <div class="mock" aria-label="Exemplo de template do kit: post educativo de uma dermatologista fictícia">
+        <div class="post">
+          <div class="post-top"><span class="tag">Dermatologia</span><span class="mono" aria-hidden="true">ML</span></div>
+          <div>
+            <h3>3 sinais de que uma pinta merece avaliação</h3>
+            <ol>
+              <li><b>1</b>Assimetria entre as metades</li>
+              <li><b>2</b>Bordas irregulares ou borradas</li>
+              <li><b>3</b>Mudança de cor ou de tamanho</li>
+            </ol>
+          </div>
+          <div>
+            <p class="disc">Conteúdo educativo. Não substitui a consulta.</p>
+            <div class="bloco"><div><strong>Dra. Marina Lopes</strong><span>CRM-MG 00000 · RQE 0000</span></div></div>
+          </div>
+        </div>
+        <div class="selo" aria-hidden="true"><small>Revisado conforme</small><b>CFM 2.336/23</b></div>
+        <div class="swatches" aria-hidden="true"><i style="background:#F4ECE6"></i><i style="background:#9A4F3C"></i><i style="background:#5B2E2A"></i><span>Paleta Argila, escolhida pela médica</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="dados-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Por que agora</p>
+        <h2 id="dados-title">Desde 2024 o médico pode anunciar nas redes. A disputa por pacientes começou.</h2>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>448</strong><p>escolas médicas no Brasil em 2025, contra 252 em 2014. São 48,5 mil vagas de graduação por ano.</p></div>
+        <div class="stat"><strong>80%</strong><p>dos pacientes escolhem o especialista com base em avaliações online.</p></div>
+        <div class="stat"><strong>+152%</strong><p>fiscalizações de publicidade médica do CRM-MG: 210 em 2024, 530 em 2025.</p></div>
+      </div>
+      <p class="source">Fontes: Demografia Médica no Brasil 2025; Doctoralia, Paciente Digital (2023); CRM-MG via Agência Lupa (2026).</p>
+    </div>
+  </section>
+
+  <section class="section" id="como-funciona" aria-labelledby="como-title" style="padding-top: 0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">O produto</p>
+        <h2 id="como-title">Uma identidade pronta, montada em três escolhas.</h2>
+        <p>Sem briefing, sem reunião e sem mensalidade. Você escolhe, a Carimbo entrega os arquivos com seus dados aplicados.</p>
+      </div>
+      <div class="how">
+        <ol class="steps">
+          <li><div><h3>Escolha a especialidade</h3><p>Cada especialidade tem estilos pensados para o seu público, da pediatria à cardiologia.</p></div></li>
+          <li><div><h3>Escolha o estilo e as cores</h3><p>Paletas e combinações de fontes prontas. A cor é a parte que é só sua.</p></div></li>
+          <li><div><h3>Receba e publique</h3><p>Seu nome, CRM e RQE já entram nos arquivos. É só editar o texto e postar.</p></div></li>
+        </ol>
+        <div class="kit">
+          <p class="eyebrow">O que vem no kit</p>
+          <h3>Carimbo Marca</h3>
+          <ul>
+            <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span><b>Logo</b> em versões horizontal, vertical, negativa e só símbolo</span></li>
+            <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span><b>Paleta de cores</b> com os códigos para usar em qualquer ferramenta</span></li>
+            <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span><b>Tipografia</b> com fontes gratuitas e o guia de uso</span></li>
+            <li><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg><span><b>10 templates editáveis</b> com CRM e RQE já aplicados</span></li>
+          </ul>
+          <p class="soon">Em breve na mesma linha: <b>Carimbo Conteúdo</b> (3 meses de posts educativos revisados) e <b>Carimbo Consultório</b> (placa, receituário, cartão e display com QR).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="beneficios" aria-labelledby="beneficios-title" style="padding-top: 0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Diferenciais</p>
+        <h2 id="beneficios-title">Marca profissional sem preço de agência e sem risco de infração.</h2>
+      </div>
+      <div class="benefits">
+        <article class="benefit">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          <h3>Em conformidade com o CFM</h3>
+          <p>Templates desenhados a partir da Resolução CFM 2.336/2023, com CRM e RQE sempre visíveis e sem promessa de resultado.</p>
+        </article>
+        <article class="benefit">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+          <h3>Compra única</h3>
+          <p>Você paga uma vez e os arquivos são seus. Agências cobram de R$ 4 a 12 mil por mês.</p>
+        </article>
+        <article class="benefit">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg>
+          <h3>Feito para a sua especialidade</h3>
+          <p>Estilos e exemplos de conteúdo pensados para o paciente de cada área, longe do perfil genérico.</p>
+        </article>
+        <article class="benefit">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13 7l4 4"/></svg>
+          <h3>Você edita sozinho</h3>
+          <p>Troque o texto do post em minutos. Não precisa saber design nem depender de ninguém.</p>
+        </article>
+      </div>
+      <div class="table-box" role="region" aria-label="Comparação entre agência, fazer sozinho e Carimbo" tabindex="0">
+        <table>
+          <thead><tr><th scope="col"></th><th scope="col">Agência</th><th scope="col">Faça você mesmo</th><th scope="col" class="us">Carimbo</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Custo</th><td>R$ 4 a 12 mil por mês</td><td>Seu tempo</td><td class="us">Compra única</td></tr>
+            <tr><th scope="row">Regras do CFM</th><td>Depende da agência</td><td>Risco de infração</td><td class="us">Já aplicadas nos templates</td></tr>
+            <tr><th scope="row">Identidade</th><td>Sob medida</td><td>Perfil genérico</td><td class="us">Pronta por especialidade</td></tr>
+            <tr><th scope="row">Quem edita</th><td>A agência</td><td>Você</td><td class="us">Você, com base pronta</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="signup" id="lista" aria-labelledby="lista-title">
+    <div class="wrap">
+      <div class="signup-copy">
+        <p class="eyebrow">Lista de espera</p>
+        <h2 id="lista-title">Garanta seu kit antes do lançamento.</h2>
+        <p>Estamos montando os primeiros kits por especialidade. Conte quem você é e ajude a decidir o que sai primeiro.</p>
+        <ul class="perks">
+          <li>Acesso antes de todo mundo</li>
+          <li>Preço de lançamento para quem está na lista</li>
+          <li>Sua especialidade entra na fila de criação</li>
+        </ul>
+      </div>
+      <div class="card">
+        <form id="signup" novalidate>
+          <div class="row">
+            <div class="field"><label for="nome">Nome</label><input id="nome" name="nome" type="text" autocomplete="name" required placeholder="Ex.: Marina Lopes"></div>
+            <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="voce@email.com"></div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="especialidade">Especialidade</label>
+              <select id="especialidade" name="especialidade" required>
+                <option value="">Escolha</option>
+                <option>Ainda sem especialidade (generalista)</option>
+                <option>Clínica Médica</option>
+                <option>Medicina de Família</option>
+                <option>Pediatria</option>
+                <option>Ginecologia e Obstetrícia</option>
+                <option>Dermatologia</option>
+                <option>Cardiologia</option>
+                <option>Ortopedia</option>
+                <option>Psiquiatria</option>
+                <option>Oftalmologia</option>
+                <option>Endocrinologia</option>
+                <option>Outra</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="uf">UF do CRM</label>
+              <select id="uf" name="uf" required>
+                <option value="">Escolha</option>
+                <option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option>
+              </select>
+            </div>
+          </div>
+          <fieldset>
+            <legend>Em que momento você está?</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="momento" id="m1" value="Formado há menos de 1 ano" required><span>Formado há menos de 1 ano</span></label>
+              <label class="chip"><input type="radio" name="momento" id="m2" value="Na residência"><span>Na residência</span></label>
+              <label class="chip"><input type="radio" name="momento" id="m3" value="Especialista há até 5 anos"><span>Especialista há até 5 anos</span></label>
+              <label class="chip"><input type="radio" name="momento" id="m4" value="Outro"><span>Outro</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>O que te interessa? <span class="hint">(pode marcar mais de um)</span></legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="interesse" id="i1" value="Marca" checked><span>Kit de marca</span></label>
+              <label class="chip"><input type="checkbox" name="interesse" id="i2" value="Conteúdo"><span>Posts prontos</span></label>
+              <label class="chip"><input type="checkbox" name="interesse" id="i3" value="Consultório"><span>Kit consultório</span></label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Quanto pagaria pelo kit de marca, uma única vez?</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="preco" id="p1" value="Até R$ 300" required><span>Até R$ 300</span></label>
+              <label class="chip"><input type="radio" name="preco" id="p2" value="R$ 300 a 600"><span>R$ 300 a 600</span></label>
+              <label class="chip"><input type="radio" name="preco" id="p3" value="R$ 600 a 1.000"><span>R$ 600 a 1.000</span></label>
+              <label class="chip"><input type="radio" name="preco" id="p4" value="Mais de R$ 1.000"><span>Mais de R$ 1.000</span></label>
+            </div>
+          </fieldset>
+          <label class="consent" for="consent"><input type="checkbox" id="consent" name="consent" required><span>Aceito receber e-mails da Carimbo sobre o lançamento. Meus dados ficam só com a Carimbo e posso pedir a exclusão quando quiser (LGPD).</span></label>
+          <div class="form-foot">
+            <button class="btn btn-primary" type="submit" id="submit">Entrar na lista</button>
+            <p class="status" id="status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+        <div class="done" id="done" hidden>
+          <p class="eyebrow">Inscrição confirmada</p>
+          <h3>Pronto, você está na lista.</h3>
+          <p id="done-text">Vamos avisar por e-mail quando o kit da sua especialidade estiver pronto.</p>
+          <button class="btn btn-outline" type="button" id="edit">Editar minhas respostas</button>
+        </div>
+        <p class="owner" id="owner" hidden></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="perguntas" aria-labelledby="faq-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Perguntas</p>
+        <h2 id="faq-title">Perguntas frequentes</h2>
+      </div>
+      <div class="faq">
+        <details><summary>O que muda com a Resolução CFM 2.336/2023?</summary><p>Desde março de 2024 o médico pode divulgar o próprio trabalho nas redes, mostrar o consultório e publicar conteúdo educativo. Continua proibido prometer resultado e é obrigatório informar CRM e, para especialistas, o RQE. Os templates da Carimbo já seguem essas regras.</p></details>
+        <details><summary>Preciso saber design para usar?</summary><p>Não. Você escolhe especialidade, estilo e cores, e recebe arquivos prontos. Nos templates, só troca o texto.</p></details>
+        <details><summary>Ainda não tenho especialidade. O kit serve para mim?</summary><p>Serve. Para quem ainda é generalista, os templates mostram só o CRM, e o RQE entra quando você tiver o título.</p></details>
+        <details><summary>Quando o kit fica pronto?</summary><p>Estamos validando os primeiros kits agora. Quem entra na lista recebe primeiro, e as especialidades mais pedidas saem antes.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer on-band">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="#topo" aria-label="Carimbo, voltar ao início">
+          <svg class="sym" width="34" height="34" viewBox="0 0 120 120" aria-hidden="true"><path class="b" d="M0 22A22 22 0 0 1 22 0H48A4 4 0 0 1 52 4V48A4 4 0 0 1 48 52H4A4 4 0 0 1 0 48Z"/><path class="a" d="M68 4A4 4 0 0 1 72 0H98A22 22 0 0 1 120 22V48A4 4 0 0 1 116 52H72A4 4 0 0 1 68 48Z"/><path class="b" d="M0 72A4 4 0 0 1 4 68H48A4 4 0 0 1 52 72V116A4 4 0 0 1 48 120H22A22 22 0 0 1 0 98Z"/><path class="b" d="M68 72A4 4 0 0 1 72 68H116A4 4 0 0 1 120 72V98A22 22 0 0 1 98 120H72A4 4 0 0 1 68 116Z"/></svg>
+          <span class="word">carimbo</span>
+        </a>
+        <p>Marca pronta para médicos em início de carreira, já em conformidade com o CFM.</p>
+      </div>
+      <div class="foot-cols">
+        <div>
+          <h3>Contato</h3>
+          <ul>
+            <li>[e-mail de contato]</li>
+            <li>[WhatsApp]</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Redes</h3>
+          <ul>
+            <li>Instagram [@perfil]</li>
+            <li>LinkedIn [página]</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Navegar</h3>
+          <ul>
+            <li><a href="#como-funciona">Como funciona</a></li>
+            <li><a href="#beneficios">Benefícios</a></li>
+            <li><a href="#lista">Lista de espera</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Carimbo · Projeto autoral de Matheus Morato da Costa</span>
+      <span>A Carimbo vende produtos de identidade visual e não presta serviço médico.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Fora do claude.ai, as inscrições vão para este endereço (ex.: um endpoint do Formspree).
+  // Ele recebe um POST com o JSON da inscrição. Vazio = o formulário avisa que não pode salvar.
+  var FORM_ENDPOINT = '';
+  var form = document.getElementById('signup');
+  var statusEl = document.getElementById('status');
+  var submitBtn = document.getElementById('submit');
+  var done = document.getElementById('done');
+  var doneText = document.getElementById('done-text');
+  var ownerEl = document.getElementById('owner');
+  var db = null, uid = null, ready = null;
+
+  function setStatus(msg, isErr) {
+    statusEl.textContent = msg || '';
+    statusEl.className = 'status' + (isErr ? ' err' : '');
+  }
+
+  function showDone(data) {
+    form.hidden = true;
+    done.hidden = false;
+    if (data && data.especialidade) {
+      doneText.textContent = 'Vamos avisar em ' + data.email + ' quando o kit de ' + data.especialidade + ' estiver pronto.';
+    }
+  }
+
+  function fill(data) {
+    if (!data) return;
+    ['nome', 'email', 'especialidade', 'uf'].forEach(function (k) { if (data[k]) form.elements[k].value = data[k]; });
+    form.querySelectorAll('input[name=momento]').forEach(function (r) { r.checked = r.value === data.momento; });
+    form.querySelectorAll('input[name=preco]').forEach(function (r) { r.checked = r.value === data.preco; });
+    var ints = data.interesses || [];
+    form.querySelectorAll('input[name=interesse]').forEach(function (c) { c.checked = ints.indexOf(c.value) > -1; });
+    form.elements.consent.checked = !!data.consentimento;
+  }
+
+  async function connect() {
+    if (!window.claude || typeof window.claude.use !== 'function') return;
+    try {
+      var results = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+      db = results[0];
+      var user = results[1];
+      uid = user ? await user.id() : null;
+      if (db && uid) {
+        var snap = await db.doc('waitlist/' + uid).get();
+        if (snap.exists) { fill(snap.data()); showDone(snap.data()); }
+      }
+      if (db && user && await user.canEdit()) {
+        var all = await db.collection('waitlist').get();
+        ownerEl.hidden = false;
+        ownerEl.textContent = 'Visível só para você: ' + all.size + (all.size === 1 ? ' inscrição' : ' inscrições') + ' na lista até agora.';
+      }
+    } catch (e) { /* the page still works as a static landing page */ }
+  }
+  ready = connect();
+
+  function validate() {
+    var f = form.elements;
+    if (!f.nome.value.trim()) return ['Informe seu nome.', f.nome];
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim())) return ['Informe um e-mail válido, como voce@email.com.', f.email];
+    if (!f.especialidade.value) return ['Escolha sua especialidade.', f.especialidade];
+    if (!f.uf.value) return ['Escolha a UF do seu CRM.', f.uf];
+    if (!form.querySelector('input[name=momento]:checked')) return ['Conte em que momento da carreira você está.', document.getElementById('m1')];
+    if (!form.querySelector('input[name=preco]:checked')) return ['Escolha quanto pagaria pelo kit.', document.getElementById('p1')];
+    if (!f.consent.checked) return ['Marque o aceite para receber os e-mails do lançamento.', f.consent];
+    return null;
+  }
+
+  form.addEventListener('submit', async function (ev) {
+    ev.preventDefault();
+    var problem = validate();
+    if (problem) { setStatus(problem[0], true); problem[1].focus(); return; }
+    submitBtn.disabled = true;
+    setStatus('Salvando…');
+    await ready;
+    var useDb = !!(db && uid);
+    if (!useDb && !FORM_ENDPOINT) {
+      submitBtn.disabled = false;
+      setStatus('Não foi possível salvar agora. Abra a página pelo link da Carimbo e tente de novo.', true);
+      return;
+    }
+    var f = form.elements;
+    var data = {
+      nome: f.nome.value.trim(),
+      email: f.email.value.trim(),
+      especialidade: f.especialidade.value,
+      uf: f.uf.value,
+      momento: form.querySelector('input[name=momento]:checked').value,
+      interesses: Array.prototype.map.call(form.querySelectorAll('input[name=interesse]:checked'), function (c) { return c.value; }),
+      preco: form.querySelector('input[name=preco]:checked').value,
+      consentimento: true,
+      origem: 'landing-v1',
+      atualizadoEm: new Date().toISOString()
+    };
+    try {
+      if (useDb) {
+        await db.doc('waitlist/' + uid).set(data);
+      } else {
+        var res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+      }
+      setStatus('');
+      showDone(data);
+    } catch (e) {
+      setStatus(e && e.code === 'quota_exceeded' ? 'A lista atingiu o limite. Fale com a gente pelo contato no rodapé.' : 'Não deu para salvar. Confira a conexão e tente de novo.', true);
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  document.getElementById('edit').addEventListener('click', function () {
+    done.hidden = true;
+    form.hidden = false;
+    document.getElementById('nome').focus();
+  });
+})();
+</script>
+
+</body>
+</html>
